@@ -7,6 +7,241 @@
 	
 	<properties>
         <java.version>1.8</java.version>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
     </properties>
+    
+    <!-- 
+    Parent Poms allow you to manage the following things for multiple child projects and modules:
+	* Configuration - Java Version and Other Properties
+	* Dependency Management - Version of dependencies
+	* Default Plugin Configuration
+    -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.7.RELEASE</version>
+	</parent>
+    
+    <dependencies>
+    	<!-- Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container -->
+    	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!-- Additional: Adding unit tests  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Additional: Management services (health, audit, beans and more) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        
+         <!-- Additional: Spring data jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <!-- Excluding it because it contains tomcat jdbc connection pool inside it -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- The H2 Console application lets you access a database using a browser. 
+        This can be a H2 database, or another database that supports the JDBC API. 
+        This is a client/server application, so both a server and a client (a browser) are required to run it. -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        
+        <!-- Additional: Adding connection Pooling -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        
+        <!-- Additional: Adding joda-time -->
+        <dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		</dependency>
+		
+		<!-- It's used to define @Type in entity files : @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime") -->
+		<dependency>
+		    <groupId>org.jadira.usertype</groupId>
+		    <artifactId>usertype.extended</artifactId>
+		    <version>5.0.0.GA</version>
+		</dependency>
+		
+		<!-- Additional: MySQL dependency -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+		<!-- Additional: Model Mapper to map dto to entity and vice-versa -->
+		<dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+		
+		<!-- Additional: StringUtils methods for string validations -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.6</version>
+		</dependency>
+		
+		<!-- Additional: Adding AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		
+		<!-- Additional: Adding swagger -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+				
+		<!-- Additional: Adding Spring Framework Caching Support and EhCache as cache manager -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        
+        <!-- Additional: Adding PowerMockito -->
+        <!-- Check https://github.com/powermock/powermock/wiki/Mockito to check the applicable version compatible with mockito artifact -->
+        <dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-module-junit4</artifactId>
+		    <version>1.6.4</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-api-mockito</artifactId>
+		    <version>1.6.4</version>
+		    <scope>test</scope>
+		</dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+        	
+		    <!--*********************************************************************
+			*************************************************************************
+				The Spring Boot Maven plugin provides many convenient features:
+			
+				* 	It collects all the jars on the classpath and builds a single, runnable "uber-jar", which makes it more convenient to execute and transport your service.
+				*	It searches for the public static void main() method to flag as a runnable class.
+				*	It provides a built-in dependency resolver that sets the version number to match Spring Boot dependencies. You can override any version you wish, but it will default to Boot’s chosen set of versions.
+			*************************************************************************
+			**********************************************************************-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
+		    <!--*********************************************************************
+			*************************************************************************
+             	
+             	Additional: Plugin to generate JPA static metamodel (used in criteria, specifications & QueryDsl)
+             	 
+            *************************************************************************
+			**********************************************************************-->
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.2.4</version>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <processors>
+                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                            </processors>
+                            <outputDirectory>${project.build.directory}/generated-sources/jpa-metamodel</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-jpamodelgen</artifactId>
+                        <version>5.4.1.Final</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            
+           	<!--*********************************************************************
+			*************************************************************************
+             	
+             	Additional: Plugin to add generated jpa-metamodel folder as "Source Folder"
+             	 
+            *************************************************************************
+			**********************************************************************-->
+			
+            <plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <id>add-source</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+			                <goal>add-source</goal>
+			            </goals>
+			            <configuration>
+			                <sources>
+			                    <source>${project.build.directory}/generated-sources/jpa-metamodel</source>
+			                </sources>
+			            </configuration>
+			        </execution>
+			    </executions>
+			 </plugin>
+        </plugins>
+    </build>
+    
+    <!--*********************************************************************
+    *************************************************************************
+    	To run the application, there are two approaches:
+    	
+    	** Approach first **
+    	1. cd project-folder-name
+    	2. mvn clean install -DskipTests   || mvn package	(It will create the jar/war file of project)
+    	3. java -jar target/jar-or-war-name-with-extension
+    	
+    	** Approach second **
+    	1. cd project-folder-name
+    	2. mvn sprint-boot:run
+    
+    *************************************************************************
+    **********************************************************************-->
 </project>
