@@ -1,5 +1,6 @@
 package com.ocean.mvn.spring.orm.demos.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,10 @@ import org.springframework.stereotype.Service;
 
 import com.ocean.mvn.spring.orm.demos.config.exception.ApplicationGenericException;
 import com.ocean.mvn.spring.orm.demos.data.dto.UserDTO;
+import com.ocean.mvn.spring.orm.demos.data.entity.Role;
 import com.ocean.mvn.spring.orm.demos.data.entity.Role_;
 import com.ocean.mvn.spring.orm.demos.data.entity.User;
+import com.ocean.mvn.spring.orm.demos.data.entity.UserDetail;
 import com.ocean.mvn.spring.orm.demos.data.entity.UserDetail_;
 import com.ocean.mvn.spring.orm.demos.data.entity.User_;
 import com.ocean.mvn.spring.orm.demos.data.entity.projection.UserSummaryProjection;
@@ -110,6 +113,71 @@ public class UserServiceImpl implements UserService
 		Page<UserDTO> pageUserDTOList = new PageImpl<>(userDTOList, pageable, pageUserList.getTotalElements());
 		
 		return pageUserDTOList;
+	}
+	
+	@Override
+	public Page<UserDTO> getUserObjectsByPage(Pageable pageable) 
+	{
+		//Pageable pageable = new PageRequest(page, pageSize);	// Pages are zero indexed, thus providing 0 for page will return the first page.
+		
+		logger.info("Retrieving user object with pageNumber: "+pageable.getPageNumber()+" | pageSize: "+pageable.getPageSize() +" | and sorting by: "+pageable.getSort());
+		Page<Object[]> pageUserList = userRepository.findUserObjectsByPage(pageable);
+		
+		List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+		pageUserList.getContent().forEach(obj -> 
+		{	
+			User user = new User();
+			user.setId(((BigInteger) obj[0]).longValue());
+			user.setUsername((String) obj[1]);
+			
+			UserDetail uDetail = new UserDetail();
+			uDetail.setFirstName((String) obj[2]);
+			uDetail.setLastName((String) obj[3]);
+			user.setUserDetail(uDetail);
+			
+			Role role = new Role();
+			role.setRoleType(RoleType.getByValue((String) obj[4]));
+			user.setRole(role);
+			
+			userDTOList.add(userMapper.mapToDTO(user, new UserDTO()));
+
+		});
+				
+		Page<UserDTO> pageUserDTOList = new PageImpl<>(userDTOList, pageable, pageUserList.getTotalElements());
+		
+		return pageUserDTOList;
+	}
+	
+	@Override
+	public UserDTO getUserObjectById(Long userId) 
+	{
+		logger.info("Retrieving user object with id: "+ userId);
+		List<Object[]> users = userRepository.findUserObjectById(userId);	// This will return only one object
+		
+		UserDTO userDTO = null;
+		
+		User user = new User();		
+		for(Object[] obj : users)
+		{
+			//logger.info("Object Class Type: "+obj[0].getClass());
+			//user.setId((Long) obj[0]);
+			
+			user.setId(((BigInteger) obj[0]).longValue());
+			user.setUsername((String) obj[1]);
+			
+			UserDetail uDetail = new UserDetail();
+			uDetail.setFirstName((String) obj[2]);
+			uDetail.setLastName((String) obj[3]);
+			user.setUserDetail(uDetail);
+			
+			Role role = new Role();
+			role.setRoleType(RoleType.getByValue((String) obj[4]));
+			user.setRole(role);
+			
+			userDTO = userMapper.mapToDTO(user, new UserDTO());
+		}
+		
+		return userDTO;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.ocean.mvn.spring.orm.demos.api.endpoint;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class UserApi
 		        "zip": "110094"
 		    }
 		}
+		
+		In requestHeader: zoneId = UTC
 	**/
 	/** @PostMapping is a composed annotation that acts as a shortcut for @RequestMapping(method = RequestMethod.POST) **/
 	@RequestMapping(value="/create", method=RequestMethod.POST)
@@ -92,6 +96,20 @@ public class UserApi
 	{
 		logger.info("API: Fetching user by id");
 		return userService.getUserById(id);
+	}
+	
+	@GetMapping(path="/getUserObject")
+	public UserDTO getUserObjectById(@RequestParam("userId") Long id)
+	{
+		logger.info("API: Fetching user object by id");
+		return userService.getUserObjectById(id);
+	}
+	
+	@GetMapping(path="/getUserObjectsByPage")
+	public Page<UserDTO> getUserObjectsByPage(Pageable pageable)
+	{
+		logger.info("API: Fetching user objects by page");
+		return userService.getUserObjectsByPage(pageable);
 	}
 	
 	/** 
