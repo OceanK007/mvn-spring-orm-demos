@@ -26,6 +26,9 @@ mvnDebug spring-boot:run
    2. mvnDebug spring-boot:run
    3. goto eclipse > debug > debug configurations > remote java application > create new configuration
    
+# To run test cases:
+   1. mvn clean install
+
 # Branch: sboot-crud
 	* Adding External configuration (.properties file configuration)
 	* Adding Logging functionality slf4j
