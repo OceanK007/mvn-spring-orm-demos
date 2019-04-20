@@ -10,6 +10,10 @@ mvn spring-boot:run
 # To debug
 mvnDebug spring-boot:run
 
+# To access swagger
+   1. http://localhost:8080/v2/api-docs
+   2. http://localhost:8080/swagger-ui.html
+
 # To run the project(There are 2 approaches):
    ** Approach first **
    1. cd project-folder-name
@@ -41,6 +45,9 @@ mvnDebug spring-boot:run
 	* Adding QueryDSL for dynamic query generation. (Still didn't implement)
 	* Adding Projection to fetch specific numbers of columns
 	* Adding Caching @Service and @Repository levels
+
+# Branch: sboot-crud
+	* Adding swagger for API documentation
 
 # Spring boot URLs
 	* https://spring.io/guides/gs/spring-boot/
