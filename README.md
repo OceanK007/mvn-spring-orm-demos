@@ -42,6 +42,9 @@ mvnDebug spring-boot:run
 	* Adding Projection to fetch specific numbers of columns
 	* Adding Caching @Service and @Repository levels
 
+# Branch: sboot-crud-junit
+	* Adding JUnit with Mokito and PowerMokito
+
 # Spring boot URLs
 	* https://spring.io/guides/gs/spring-boot/
 
