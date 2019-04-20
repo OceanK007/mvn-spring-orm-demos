@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ocean.mvn.spring.orm.demos.config.ApplicationProperties;
 
-
 @RestController
 public class SpringBootApi 
 {
@@ -23,6 +22,7 @@ public class SpringBootApi
 	private String APPLICATION_STATUS;
 
 	@RequestMapping(value="/")
+	// @LogginMethod	// Use this when you have to explicitly define annotation
 	public String hello()
 	{
 		logger.info("INFO: "+applicationProperties.getProperty("application.status"));
