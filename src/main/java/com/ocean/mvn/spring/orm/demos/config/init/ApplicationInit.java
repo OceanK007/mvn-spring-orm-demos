@@ -7,7 +7,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.ocean.mvn.spring.orm.demos.aop.annotation.LoggingClass;
+
 @Component
+@LoggingClass
 public class ApplicationInit implements ApplicationRunner	// This will be called on project deployment
 {
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationInit.class);
