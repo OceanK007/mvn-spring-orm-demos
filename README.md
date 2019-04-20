@@ -43,7 +43,7 @@ mvnDebug spring-boot:run
 	* Adding Caching @Service and @Repository levels
 
 # Branch: sboot-crud-junit
-	* Adding JUnit with Mokito and PowerMokito
+	* Adding JUnit with Mockito and PowerMockito
 
 # Spring boot URLs
 	* https://spring.io/guides/gs/spring-boot/
