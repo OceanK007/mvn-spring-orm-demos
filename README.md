@@ -41,3 +41,11 @@ mvnDebug spring-boot:run
 	* Adding QueryDSL for dynamic query generation. (Still didn't implement)
 	* Adding Projection to fetch specific numbers of columns
 	* Adding Caching @Service and @Repository levels
+
+# Branch: sboot-crud-mongodb
+	* Adding MongoDB CRUD operation
+	
+# MongoDB URLs
+	* http://www.baeldung.com/queries-in-spring-data-mongodb
+	* https://www.mkyong.com/spring-boot/spring-boot-spring-data-mongodb-example/
+	* http://javasampleapproach.com/spring-framework/spring-data/mongodb-model-one-one-one-many-relationships-mongodb-embedded-documents-springboot
