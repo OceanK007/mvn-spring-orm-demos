@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ocean.mvn.spring.orm.demos.aop.annotation.LoggingClass;
 import com.ocean.mvn.spring.orm.demos.data.dto.UserDTO;
 import com.ocean.mvn.spring.orm.demos.service.UserService;
 import com.ocean.mvn.spring.orm.demos.util.constant.ApiConstant;
 
+@LoggingClass
 @RestController
 @RequestMapping(ApiConstant.USER_API)
 public class UserApi 

@@ -41,3 +41,6 @@ mvnDebug spring-boot:run
 	* Adding QueryDSL for dynamic query generation. (Still didn't implement)
 	* Adding Projection to fetch specific numbers of columns
 	* Adding Caching @Service and @Repository levels
+
+# Branch: sboot-crud-aop-class
+	* Adding AOP class level

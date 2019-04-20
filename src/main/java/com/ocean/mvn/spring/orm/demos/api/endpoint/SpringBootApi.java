@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ocean.mvn.spring.orm.demos.aop.annotation.LoggingClass;
 import com.ocean.mvn.spring.orm.demos.config.ApplicationProperties;
 
-
 @RestController
+@LoggingClass
 public class SpringBootApi 
 {
 	private static final Logger logger = LoggerFactory.getLogger(SpringBootApi.class);
